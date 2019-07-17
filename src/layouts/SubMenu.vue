@@ -1,5 +1,5 @@
-<template>
-  <a-sub-menu>
+<template functional>
+  <a-sub-menu :key="props.menuInfo.path">
     <span slot="title">
       <a-icon
         v-if="props.menuInfo.meta.icon"
