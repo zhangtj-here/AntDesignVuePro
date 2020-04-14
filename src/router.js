@@ -1,16 +1,16 @@
 import Vue from "vue";
 import Router from "vue-router";
-import NProgress from 'nprogress';
+import NProgress from "nprogress";
 import "nprogress/nprogress.css";
-import Home from "./views/Home.vue";
-import renderRouterView from "./components/renderRouterView";
-import NotFound from './views/404';
+// import Home from "./views/Home.vue";
+// import renderRouterView from "./components/renderRouterView";
+import NotFound from " ./views/404";
 
 Vue.use(Router);
 
 const router = new Router({
   mode: "history",
-  base: process.env.BASE_URL,//
+  base: process.env.BASE_URL, //
   routes: [
     {
       path: "*",
@@ -18,34 +18,35 @@ const router = new Router({
       component: NotFound
     },
     {
-      path: '/user',
+      path: "/user",
       // component: renderRouterView,
       // component: { render: h => h( 'router-view' ) },
       component: () =>
-          import( /* webpackChunkName: "layout" */ "./layouts/UserLayout.vue"),
+        import(/* webpackChunkName: "layout" */ "./layouts/UserLayout.vue"),
       children: [
         {
-          path: '/user',
-          redirect: '/user/login'
+          path: "/user",
+          redirect: "/user/login"
         },
         {
-          path: '/user/login',
+          path: "/user/login",
           name: "login",
           component: () =>
-            import( /* webpackChunkName: "user" */ "./views/user/login.vue" )
+            import(/* webpackChunkName: "user" */ "./views/user/login.vue")
         },
         {
           path: "/user/register",
           name: "register",
           component: () =>
-              import(/* webpackChunkName: "user" */  "./views/user/register.vue" )
+            import(/* webpackChunkName: "user" */ "./views/user/register.vue")
         }
       ]
     },
     {
       path: "/",
+      // component: { render: h => h( 'router-view' ) },
       component: () =>
-          import(/* webpackChunkName: "layout" */ "./layouts/BasicLayout"),
+        import(/* webpackChunkName: "layout" */ "./layouts/BasicLayout"),
       children: [
         // dashboard
         {
@@ -61,7 +62,7 @@ const router = new Router({
               path: "/dashboard/analysis",
               name: "analysis",
               component: () =>
-                  import(/* webpackChunkName: "dashboard" */ "./views/Dashboard/Analysis")
+                import(/* webpackChunkName: "dashboard" */ "./views/Dashboard/Analysis")
             }
           ]
         },
@@ -72,16 +73,22 @@ const router = new Router({
           component: { render: h => h("router-view") },
           children: [
             {
+              path: "/form",
+              redirect: "/form/basic-form"
+            },
+            {
               path: "/form/basic-form",
               name: "basicform",
               component: () =>
-                  import(/* webpackChunkName: "form" */ "./views/Forms/BasicForm")
+                import(/* webpackChunkName: "form" */ "./views/Forms/BasicForm")
             },
             {
               path: "/form/step-form",
               name: "stepform",
               component: () =>
-                  import(/* webpackChunkName: "form" */ "./views/Forms/StepForm"),
+                import(/* webpackChunkName: "form" */ "./views/Forms/StepForm"),
+              // component: () =>
+              // import(/* webpackChunkName: "form" */ "./views/Forms/BasicForm"),
               children: [
                 {
                   path: "/form/step-form",
@@ -91,19 +98,19 @@ const router = new Router({
                   path: "/form/step-form/info",
                   name: "info",
                   component: () =>
-                      import(/* webpackChunkName: "form" */ "./views/Forms/StepForm/Step1")
+                    import(/* webpackChunkName: "form" */ "./views/Forms/StepForm/Step1")
                 },
                 {
                   path: "/form/step-form/confirm",
                   name: "confirm",
                   component: () =>
-                      import(/* webpackChunkName: "form" */ "./views/Forms/StepForm/Step2")
+                    import(/* webpackChunkName: "form" */ "./views/Forms/StepForm/Step2")
                 },
                 {
                   path: "/form/step-form/result",
                   name: "result",
                   component: () =>
-                      import(/* webpackChunkName: "form" */ "./views/Forms/StepForm/Step3")
+                    import(/* webpackChunkName: "form" */ "./views/Forms/StepForm/Step3")
                 }
               ]
             }
