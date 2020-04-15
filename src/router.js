@@ -1,10 +1,14 @@
 import Vue from "vue";
 import Router from "vue-router";
+import findLast from "lodash/findLast";
+import { notification } from "ant-design-vue";
 import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 //import Home from "./views/Home.vue";
 //import renderRouterView from "./components/renderRouterView";
+import Forbidden from "./views/403";
 import NotFound from "./views/404";
+import { check, isLogin } from "./utils/auth";
 
 Vue.use(Router);
 
@@ -15,6 +19,8 @@ const router = new Router({
     {
       path: "/user",
       hideInMenu: true,
+      name: "user",
+      meta: { icon: "dashboard", title: "用户" },
       // component: renderRouterView,
       // component: { render: h => h( 'router-view' ) },
       component: () =>
@@ -27,12 +33,14 @@ const router = new Router({
         {
           path: "/user/login",
           name: "login",
+          meta: { title: "登录" },
           component: () =>
             import(/* webpackChunkName: "user" */ "./views/user/login.vue")
         },
         {
           path: "/user/register",
           name: "register",
+          meta: { title: "注册" },
           component: () =>
             import(/* webpackChunkName: "user" */ "./views/user/register.vue")
         }
@@ -40,6 +48,7 @@ const router = new Router({
     },
     {
       path: "/",
+      meta: { authority: ["user", "admin"] },
       component: () =>
         import(/* webpackChunkName: "layout" */ "./layouts/BasicLayout"),
       children: [
@@ -67,7 +76,7 @@ const router = new Router({
         {
           path: "/form",
           name: "form",
-          meta: { icon: "form", title: "表单" },
+          meta: { icon: "form", title: "表单", authority: ["admin"] },
           component: { render: h => h("router-view") },
           children: [
             {
@@ -118,6 +127,13 @@ const router = new Router({
     },
 
     {
+      path: "/403",
+      name: "403",
+      hideInMenu: true,
+      component: Forbidden
+    },
+
+    {
       path: "*",
       name: "404",
       hideInMenu: true,
@@ -140,6 +156,23 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   if (to.path !== from.path) {
     NProgress.start();
+  }
+  const record = findLast(to.matched, record => record.meta.authority);
+  if (record && !check(record.meta.authority)) {
+    if (!isLogin() && to.path !== "/user/login") {
+      next({
+        path: "/user/login"
+      });
+    } else if (to.path !== "/403") {
+      notification.error({
+        message: "Notification Title",
+        description: "您没有权限访问，请联系管理员。"
+      });
+      next({
+        path: "/403"
+      });
+    }
+    NProgress.done();
   }
   next();
 });

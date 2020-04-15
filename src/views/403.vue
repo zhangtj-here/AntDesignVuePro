@@ -1,10 +1,10 @@
 <template>
-  <div>注册页</div>
+  <div>403</div>
 </template>
 
 <script>
 export default {
-  name: "register"
+  name: "403"
 };
 </script>
 
