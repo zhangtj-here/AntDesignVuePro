@@ -4,7 +4,7 @@ import NProgress from "nprogress";
 import "nprogress/nprogress.css";
 // import Home from "./views/Home.vue";
 // import renderRouterView from "./components/renderRouterView";
-import NotFound from " ./views/404";
+import NotFound from "./views/404";
 
 Vue.use(Router);
 
