@@ -28,7 +28,9 @@
         </a-layout-footer>
       </a-layout>
     </a-layout>
-    <settingDrawer />
+    <Authorized :authority="['admin']">
+      <settingDrawer />
+    </Authorized>
     <!--<div>
 			<Header />
 			<SiderMenu />
