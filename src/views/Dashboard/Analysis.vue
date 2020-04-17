@@ -24,7 +24,7 @@ export default {
       //   () => random(100)
       // );
       // this.chartOption = { ...this.chartOption };
-      this.getChartData();
+      // this.getChartData();
     }, 3000);
   },
   methods: {
