@@ -14,7 +14,7 @@ module.exports = {
           if (req.headers.accept.indexOf("html") !== -1) {
             console.log("Skipping proxy for browser request.");
             return "/index.html";
-          } else {
+          } else if (process.env.MOCK !== "none") {
             // console.log(req.path,req.method);
             // console.log(req.path.split('/api/')[1]);
             const name = req.path
