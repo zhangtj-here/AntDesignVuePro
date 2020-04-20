@@ -17,6 +17,34 @@
           placeholder="请输入付款账号"
         />
       </a-form-item>
+      <a-form-item
+        label="收款账户"
+        :label-col="formItemLayout.labelCol"
+        :wrapper-col="formItemLayout.wrapperCol"
+      >
+        <ReceiverAccount
+          v-decorator="[
+            'receiverAccount',
+            {
+              initialValue: step,
+              rules: [
+                {
+                  required: true,
+                  message: '请输入付款账号',
+                  validator: (rule, value, callback) => {
+                    if (value && value.number) {
+                      callback();
+                    } else {
+                      callback(false);
+                    }
+                  }
+                }
+              ]
+            }
+          ]"
+          placeholder="请输入付款账号"
+        />
+      </a-form-item>
       <a-form-item>
         <a-button type="primary" @click="handleSubmit">下一步</a-button>
       </a-form-item>
@@ -25,7 +53,9 @@
 </template>
 
 <script>
+import ReceiverAccount from "@/components/ReceiverAccount"; // @是cli生成的一个变量，相当于src目录下
 export default {
+  components: { ReceiverAccount },
   data() {
     this.form = this.$form.createForm(this);
     return {
