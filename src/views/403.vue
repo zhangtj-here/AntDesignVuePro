@@ -1,5 +1,7 @@
 <template>
-  <div>403</div>
+  <div style="text-align: center;">
+    <IconFont type="icon-403" style="font-size: 100px;" />
+  </div>
 </template>
 
 <script>
