@@ -3,6 +3,9 @@
     {{ $t("message")["app.dashboard.analysis.timeLabel"] }}:
     <a-date-picker></a-date-picker>
     <Chart :option="chartOption" style="height: 500px;" />
+    <pre
+      v-highlightjs="chartCode"
+    ><code class="html">const s = new Date().toString()</code></pre>
   </div>
 </template>
 
@@ -12,11 +15,13 @@
 import axios from "axios";
 import request from "../../utils/request";
 import Chart from "../../components/Chart";
+import chartCode from "!!raw-loader!../../components/Chart";
 export default {
   name: "Analysis",
   data() {
     return {
-      chartOption: {}
+      chartOption: {},
+      chartCode
     };
   },
   mounted() {
