@@ -125,11 +125,11 @@ export default {
     handleSubmit() {
       this.form.validateFields((err, values) => {
         if (!err) {
-          console.log(values);
+          // console.log(values);
           // this.fieldA = values.fieldA;
           Object.assign(this, values); // 更新数据data里的值
         } else {
-          console.log(err);
+          // console.log(err);
         }
       });
       //   if (this.fieldA.length <= 5) {

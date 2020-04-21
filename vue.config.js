@@ -1,5 +1,6 @@
 const path = require("path");
 const AntDesignThemePlugin = require("antd-theme-webpack-plugin");
+const webpack = require("webpack");
 
 const options = {
   antDir: path.join(__dirname, "./node_modules/ant-design-vue"),
@@ -41,7 +42,12 @@ module.exports = {
     svgRule.use("vue-svg-loader").loader("vue-svg-loader");
   },
   configureWebpack: {
-    plugins: [themePlugin]
+    plugins: [themePlugin, new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)]
+    // resolve: {
+    //   alias: {
+    //     "@ant-design/icons/lib/dist$": path.resolve(__dirname, "./src/icons.js")
+    //   }
+    // }
   },
   devServer: {
     proxy: {
